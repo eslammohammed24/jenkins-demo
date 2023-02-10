@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-    maven "sprint-maven"
+    maven "maven-sprints"
     
     }
 
@@ -24,14 +24,14 @@ pipeline {
         }
     post {
         always {
-             echo "this is build number $BUILD_NUMBER"
+            echo "this is build number $BUILD_NUMBER"
         
         }
         success {
-             echo "this build has been build successfully"
+            echo "this build has been build successfully"
         
         }
     
-      }     
-    }
+    }     
+   }  
 }
