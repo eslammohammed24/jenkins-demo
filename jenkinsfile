@@ -1,31 +1,34 @@
 pipeline {
-    agent any
-    tools {
-    maven "sprint-maven"
-    
+     agent any
+     parameters {
+        booleanParam(name:'project', defaultValue: true, description:'this paramater help you to know project name')
+        choice(name: 'namespace', choices:['dev','prod','stage'], description: '' ) 
     }
 
     stages {
-        stage('Build') {
+        stage('check') {
             steps {
-                echo 'Building..'
-                sh "mvn package"
+               echo "checking your code"
+               echo "$(params.namespace)"
             }
         }
-        stage('Test') {
+
+        stage('test') {
+            when {
+                expression{
+                    params.project == true 
+                }
+            }
             steps {
-                echo 'Testing..'
+                echo "testing your app"
             }
         }
-        stage('Deploy') {
+        
+        stage('deployment') {  
             steps {
-                echo 'Deploying....'
+                echo "code is deployed"
             }
-        }
-    post {
-    always {
-      echo 'I will always execute this!'
+        }    
     }
-  }
-  }  
+
 }
